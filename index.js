@@ -9,7 +9,7 @@ require("dotenv").config();
 app.use(formidable());
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect("mongodb://localhost/marvel-test", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
