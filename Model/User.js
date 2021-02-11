@@ -7,8 +7,8 @@ const User = mongoose.model("User", {
   hash: String,
   token: String,
   salt: String,
-  favoredComic: Array,
-  favoredCharacter: [Object],
+  favoredComics: Array,
+  favoredCharacters: Array,
 });
 
 module.exports = User;

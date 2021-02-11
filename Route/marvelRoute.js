@@ -21,7 +21,7 @@ router.get("/comics", async (req, res) => {
 });
 
 router.get("/characters", async (req, res) => {
-  console.log("silk road 😉 : /character");
+  console.log("road  : /character");
   try {
     console.log(req.query);
     const { skip, name, limit } = req.query;
@@ -44,6 +44,7 @@ router.get("/character-comic/:id", async (req, res) => {
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/comics/${character}?apiKey=${key}`
     );
+    console.log(response.data);
     res.status(200).json(response.data);
   } catch (error) {
     console.log(error.message);
@@ -53,20 +54,13 @@ router.get("/character-comic/:id", async (req, res) => {
 
 router.get("/Character-favored", async (req, res) => {
   console.log("road : Character-favored");
+  const { token, id, name, src, description, extension } = req.query;
   try {
-    if (
-      req.query.token &&
-      req.query.id &&
-      req.query.name &&
-      req.query.src &&
-      req.query.description &&
-      req.query.extension
-    ) {
-      const { token, id, name, src, description, extension } = req.query;
+    if (token && id && name && src && description && extension) {
       const user = await User.findOne({ token: token });
-      user.favoredCharacter;
+      user.favoredCharacters;
 
-      const userTab = user.favoredCharacter;
+      const userTab = user.favoredCharacters;
       for (let i = 0; i < userTab.length; i++) {
         if (userTab[i].id === id) {
           return res
@@ -74,7 +68,7 @@ router.get("/Character-favored", async (req, res) => {
             .json({ message: `Attention ${name} déja en favories` });
         }
       }
-      user.favoredCharacter.push({ id, name, description, src, extension });
+      user.favoredCharacters.push({ id, name, description, src, extension });
       await user.save();
       res.status(200).json({ message: `Succes ${name} ajouté en favories` });
     } else {
@@ -86,14 +80,17 @@ router.get("/Character-favored", async (req, res) => {
 });
 router.get("/Character-favored-delete", async (req, res) => {
   console.log("road : /Character-favored-delete ");
+  const { token, id, name } = req.query;
   try {
-    if (req.query.token && req.query.id && req.query.name) {
+    if (token && id && name) {
       const { token, id, name } = req.query;
       const user = await User.findOne({ token: token });
-      const userTab = user.favoredCharacter;
+
+      const userTab = user.favoredCharacters;
+
       for (let i = 0; i < userTab.length; i++) {
         if (userTab[i].id === id) {
-          user.favoredCharacter.splice(i, 1);
+          user.favoredCharacters.splice(i, 1);
         }
       }
       await user.save();
@@ -108,24 +105,13 @@ router.get("/Character-favored-delete", async (req, res) => {
 });
 router.post("/Comic-favored", async (req, res) => {
   console.log("road : Comic-favored");
+  const { token, id, name, src, description, extension } = req.fields;
   try {
-    console.log(req.fields.extension);
-
-    if (
-      req.fields.token &&
-      req.fields.id &&
-      req.fields.name &&
-      req.fields.src &&
-      req.fields.description &&
-      req.fields.extension
-    ) {
-      console.log("----------------------------------------------------");
-      console.log(req.fields.description);
-      const { token, id, name, src, description, extension } = req.fields;
+    if (token && id && name && src && description && extension) {
       const user = await User.findOne({ token: token });
-      user.favoredComic;
+      user.favoredComics;
 
-      const userTab = user.favoredComic;
+      const userTab = user.favoredComics;
       for (let i = 0; i < userTab.length; i++) {
         if (userTab[i].id === id) {
           return res
@@ -133,8 +119,7 @@ router.post("/Comic-favored", async (req, res) => {
             .json({ message: `Attention ${name} déja en favories` });
         }
       }
-      console.log("----------------------------------------------------");
-      user.favoredComic.push({ id, name, description, src, extension });
+      user.favoredComics.push({ id, name, description, src, extension });
       await user.save();
       res.status(200).json({ message: `Succes ${name} ajouté en favories` });
     } else {
@@ -146,14 +131,15 @@ router.post("/Comic-favored", async (req, res) => {
 });
 router.get("/Comic-favored-delete", async (req, res) => {
   console.log("road : /Comic-favored-delete ");
+  const { token, id, name } = req.query;
   try {
-    if (req.query.token && req.query.id && req.query.name) {
-      const { token, id, name } = req.query;
+    if (token && id && name) {
       const user = await User.findOne({ token: token });
-      const userTab = user.favoredComic;
+      const userTab = user.favoredComics;
+
       for (let i = 0; i < userTab.length; i++) {
         if (userTab[i].id === id) {
-          user.favoredComic.splice(i, 1);
+          user.favoredComics.splice(i, 1);
         }
       }
       await user.save();

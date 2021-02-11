@@ -9,7 +9,6 @@ const cloudinary = require("cloudinary").v2;
 router.post("/user/signUp", async (req, res) => {
   console.log("road : user/signUp");
   try {
-    console.log(req.fields);
     const { email, username, password } = req.fields;
     if (email && username && password) {
       const find = await User.findOne({ email: email });
@@ -20,8 +19,7 @@ router.post("/user/signUp", async (req, res) => {
         });
         if (req.files.picture) {
           const picture = req.files.picture.path;
-          console.log(picture);
-          console.log("rrrrrrrrr");
+
           const result = await cloudinary.uploader.upload(picture, {
             folder: `marvel-test/user/picture/${newAccount._id}`,
           });
@@ -40,7 +38,7 @@ router.post("/user/signUp", async (req, res) => {
         res.status(200).json(newAccount);
       } else {
         res.status(400).json({
-          message: "This email have already a account on this site 😢",
+          message: "This email have already a account on this site ",
         });
       }
     } else {
@@ -50,6 +48,7 @@ router.post("/user/signUp", async (req, res) => {
     }
   } catch (error) {
     console.log(error.message);
+    res.status(400).json(error.message);
   }
 });
 
@@ -87,6 +86,7 @@ router.get("/user-read/:token", async (req, res) => {
 
     await res.status(200).json(find);
   } catch (error) {
+    console.log(error.message);
     res.status(200).json({ message: error.message });
   }
 });
