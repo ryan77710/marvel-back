@@ -23,7 +23,6 @@ router.get("/comics", async (req, res) => {
 router.get("/characters", async (req, res) => {
   console.log("road  : /character");
   try {
-    console.log(req.query);
     const { skip, name, limit } = req.query;
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${key}&name=${
@@ -52,7 +51,7 @@ router.get("/character-comic/:id", async (req, res) => {
   }
 });
 
-router.get("/Character-favored", async (req, res) => {
+router.get("/character-favored", async (req, res) => {
   console.log("road : Character-favored");
   const { token, id, name, src, description, extension } = req.query;
   try {
@@ -78,7 +77,7 @@ router.get("/Character-favored", async (req, res) => {
     res.status(400).json(error.message);
   }
 });
-router.get("/Character-favored-delete", async (req, res) => {
+router.get("/character-favored-delete", async (req, res) => {
   console.log("road : /Character-favored-delete ");
   const { token, id, name } = req.query;
   try {
@@ -103,7 +102,7 @@ router.get("/Character-favored-delete", async (req, res) => {
     console.log(error.message);
   }
 });
-router.post("/Comic-favored", async (req, res) => {
+router.post("/comic-favored", async (req, res) => {
   console.log("road : Comic-favored");
   const { token, id, name, src, description, extension } = req.fields;
   try {
@@ -129,7 +128,7 @@ router.post("/Comic-favored", async (req, res) => {
     res.status(400).json(error.message);
   }
 });
-router.get("/Comic-favored-delete", async (req, res) => {
+router.get("/comic-favored-delete", async (req, res) => {
   console.log("road : /Comic-favored-delete ");
   const { token, id, name } = req.query;
   try {
@@ -149,7 +148,6 @@ router.get("/Comic-favored-delete", async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
-    console.log(error.message);
   }
 });
 module.exports = router;

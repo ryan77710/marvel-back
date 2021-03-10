@@ -6,7 +6,7 @@ const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 const cloudinary = require("cloudinary").v2;
 
-router.post("/user/signUp", async (req, res) => {
+router.post("/user/signup", async (req, res) => {
   console.log("road : user/signUp");
   try {
     const { email, username, password } = req.fields;
