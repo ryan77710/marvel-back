@@ -82,9 +82,9 @@ router.post("/user/login", async (req, res) => {
 router.get("/user-read/:token", async (req, res) => {
   console.log("road : /user-read/:token");
   try {
-    const find = await User.findOne({ token: req.params.token });
+    const user = await User.findOne({ token: req.params.token });
 
-    await res.status(200).json(find);
+    await res.status(200).json(user);
   } catch (error) {
     console.log(error.message);
     res.status(200).json({ message: error.message });
