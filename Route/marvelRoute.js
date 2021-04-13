@@ -111,7 +111,7 @@ router.get("/character-favored", async (req, res) => {
             await user.save();
             return res
               .status(200)
-              .json({ message: `Attention ${name} suprimé en favories` });
+              .json({ message: ` ${name} suprimé des favories` });
           }
         }
         user.favoredCharacters.push({
@@ -123,7 +123,7 @@ router.get("/character-favored", async (req, res) => {
           favored: true,
         });
         await user.save();
-        res.status(200).json({ message: `Succes ${name} ajouté en favories` });
+        res.status(200).json({ message: `Succes ${name} ajouté aux favories` });
       } else {
         res.status(400).json({ message: "query missing !" });
       }
@@ -174,7 +174,7 @@ router.post("/comic-favored", async (req, res) => {
             await user.save();
             return res
               .status(200)
-              .json({ message: `Attention ${name} suprimé en favories` });
+              .json({ message: ` ${name} suprimé des favories` });
           }
         }
         user.favoredComics.push({
@@ -186,7 +186,7 @@ router.post("/comic-favored", async (req, res) => {
           favored: true,
         });
         await user.save();
-        res.status(200).json({ message: `Succes ${name} ajouté en favories` });
+        res.status(200).json({ message: `Succes ${name} ajouté des favories` });
       } else {
         res.status(200).json({ message: "Connectez-vous" });
       }
