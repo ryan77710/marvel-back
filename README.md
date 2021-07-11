@@ -107,6 +107,9 @@ delete character favorite
 | `id`    | string | Yes      | id character   |
 | `name`  | string | Yes      | character name |
 
+<br>
+<br>
+
 ### /comic-favored (POST)
 
 add and delete favorite comic
